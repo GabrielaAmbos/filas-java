@@ -157,4 +157,52 @@ public class StaticQueue<E> implements Queue<E> {
 		}
 	}
 	
+	/**
+	 * 7. Implemente o método abaixo, que insere um elemento na primeira posição da fila.
+	 */
+	public void enqueueWithPriority(E element) throws OverflowException{
+		if(isFull()) {
+			throw new OverflowException();
+		} else {	
+			int tamanho = numElements();
+			enqueue(element);
+			for(int i = 0; i < tamanho; i++) {
+				E aux = dequeue();
+				enqueue(aux);
+			}
+		}
+	}
+	
+	/**
+	 * 8. Implemente um método equals para a fila. Uma fila será igual a outra se contiver os
+	* mesmos elementos, dispostos na mesma ordem. Para comparar os elementos, use
+	* também o método equals.
+	 */
+	public boolean equals(Queue<E>lista) {
+		int tamanho = numElements();
+		for(int i = 0; i < tamanho; i++) {
+			E aux = lista.dequeue();
+			if(elements[i] != aux) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * 9. Implemente um método clone para a fila. Esse método deve retornar uma nova fila
+	 * contendo os mesmos elementos da atual. Os elementos em si não devem ser
+	 * duplicados.
+	 */
+	public Queue<E> clone() {
+		Queue<E> aux = new StaticQueue<E>(numElements());
+		int tamanho = numElements();
+		for(int i = 0; i < tamanho; i++) {
+			aux.enqueue(elements[i]);
+		}
+		return aux;
+	}
 }
+
+
+
