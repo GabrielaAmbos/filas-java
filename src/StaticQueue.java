@@ -115,4 +115,46 @@ public class StaticQueue<E> implements Queue<E> {
 			return s;
 		}
 	}
+	
+	/**
+	 * 4. Implemente o método contains, definido abaixo, que informa se a fila contém
+	 * determinado elemento.
+	 */
+	public boolean contains(E element) {
+		for (int i = 0; i < numElements(); i++) {
+			if(element == elements[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 5. Implemente um método que inverte a ordem dos elementos da fila.
+	 */
+	public void flip() {
+		E[] aux = (E[])new Object[this.numElements()];		int cont = 0;
+		for(int i = this.numElements() - 1; i >= 0; i--) {
+			aux[cont] = this.elements[i];
+			cont++;
+		}
+		this.elements = aux;
+	}
+	
+	/**
+	 * 6. Implemente uma sobrecarga do método enqueue que recebe como parâmetro uma fila,
+	 * em vez de um elemento. Esse método deve adicionar ao final da fila corrente os
+	 * elementos da fila passada como parâmetro, mantendo a ordem original.
+	 */
+	public void enqueue(Queue<E>lista) throws OverflowException {
+		if (isFull())
+			throw new OverflowException();
+		else {
+			while(!lista.isEmpty()) {
+				E aux = lista.dequeue();
+				this.enqueue(aux);
+			}
+		}
+	}
+	
 }
