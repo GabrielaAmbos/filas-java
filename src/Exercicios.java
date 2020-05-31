@@ -20,4 +20,27 @@ public class Exercicios {
 		
 	}
 	
+	/**
+	 * 9. Em uma classe qualquer, implemente um método que recebe uma StaticQueue<Character>
+	 * chamada letters e uma String chamada word por parâmetro. Caso os caracteres de letters
+	 * (na ordem recebida) formem a palavra word, o método retorna um array contendo os caracteres
+	 * de letters invertidos. Caso contrário, o método retorna null. Dica: use uma estrutura
+	 * adicional para auxiliar. Utilize a assinatura abaixo:
+	 */
+	public Character[] invertLetters(StaticQueue<Character> letters, String word) {
+		String aux = "";
+		while(!letters.isEmpty()) {
+			aux += letters.dequeue();
+		}
+		if(aux.equals(word)) {
+			Character[] auxChar = new Character[aux.length()];
+			char [] letras = aux.toCharArray();
+			for(int i = 0; i < aux.length(); i++) {
+				auxChar[i] = letras[i];
+			}
+			return auxChar;
+		} else {
+			return null;
+		}
+	}
 }

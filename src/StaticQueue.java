@@ -133,7 +133,8 @@ public class StaticQueue<E> implements Queue<E> {
 	 * 5. Implemente um método que inverte a ordem dos elementos da fila.
 	 */
 	public void flip() {
-		E[] aux = (E[])new Object[this.numElements()];		int cont = 0;
+		E[] aux = (E[])new Object[this.numElements()];
+		int cont = 0;
 		for(int i = this.numElements() - 1; i >= 0; i--) {
 			aux[cont] = this.elements[i];
 			cont++;
@@ -202,6 +203,76 @@ public class StaticQueue<E> implements Queue<E> {
 		}
 		return aux;
 	}
+	
+	/**
+	 * 6. Implemente o método split, de acordo com a assinatura definida a seguir, que divide a fila em
+	 * duas partes. A fila corrente deve permanecer somente com os elementos do início até a primeira
+	 * ocorrência de element, inclusive. O restante dos elementos deve ser retornado em uma nova
+	 * fila. Para comparar os elementos, utilize o método equals.
+	 */
+	public Queue<E> split(E element) throws IllegalArgumentException{
+		if(!this.contains(element)) {
+			throw new IllegalArgumentException();
+		} else {
+			Queue<E> auxA = new StaticQueue<E>(elements.length);
+			Queue<E> auxB = new StaticQueue<E>(elements.length);
+			while(!isEmpty()) {
+				E auxElemento = this.dequeue();
+				auxA.enqueue(auxElemento);
+				if(auxElemento.equals(element)) {
+					break;
+				}
+			}
+			while(!isEmpty()) {
+				auxB.enqueue(this.dequeue());
+			}
+			while(!auxA.isEmpty()) {
+				this.enqueue(auxA.dequeue());
+			}
+			return auxB;
+		}
+	}
+	
+	/**
+	 * 7. Implemente um método que percorra a fila e mova para o final todas as ocorrências de um
+	 * determinado elemento.
+	 */
+	public void moveToBackAllOccurrencesOf(E element) {
+		Queue<E> auxA = new StaticQueue<E>(elements.length);
+		Queue<E> auxB = new StaticQueue<E>(elements.length);
+		while(!isEmpty()) {
+			E elemento = this.dequeue();
+			if(elemento.equals(element)) {
+				auxB.enqueue(elemento);
+			} else {
+				auxA.enqueue(elemento);
+			}
+		}
+		while(!auxA.isEmpty()) {
+			this.enqueue(auxA.dequeue());
+		}
+		while(!auxB.isEmpty()) {
+			this.enqueue(auxB.dequeue());
+		}
+	}
+	
+	/**
+	 * 8. Implemente na classe StaticQueue um método que aumente a capacidade de armazenamento
+	 * da fila, se necessário, para o valor passado como parâmetro. Os elementos atuais devem ser
+	 * preservados.
+	 */
+	public void ensureCapacity(int capacity) {
+		Queue<E> auxFila = new StaticQueue<E>(elements.length);
+		while(!this.isEmpty()) {
+			auxFila.enqueue(this.dequeue());
+		}
+		elements = (E[])new Object[capacity];
+		while(!auxFila.isEmpty()) {
+			this.enqueue(auxFila.dequeue() );
+		}
+	}
+	
+
 }
 
 
